@@ -1,0 +1,14 @@
+# Xcode & SPM
+.DS_Store
+/.build
+/Packages
+xcuserdata/
+DerivedData/
+.swiftpm/xcode
+
+# Binaries
+diskpulse
+mac-ssd-health
+*.o
+*.swiftdoc
+*.swiftmodule
