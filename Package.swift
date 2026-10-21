@@ -8,6 +8,7 @@ let package = Package(
     ],
     products: [
         .executable(name: "diskpulse", targets: ["DiskPulseCLI"]),
+        .executable(name: "DiskPulseApp", targets: ["DiskPulseApp"]),
         .library(name: "DiskPulseCore", targets: ["DiskPulseCore"])
     ],
     targets: [
@@ -18,6 +19,15 @@ let package = Package(
         .executableTarget(
             name: "DiskPulseCLI",
             dependencies: ["DiskPulseCore"]
+        ),
+        .executableTarget(
+            name: "DiskPulseApp",
+            dependencies: ["DiskPulseCore"]
+        ),
+        .executableTarget(
+            name: "DiskPulseSelfTest",
+            dependencies: ["DiskPulseCore"],
+            path: "Tests/DiskPulseCoreTests"
         )
     ]
 )

@@ -151,28 +151,27 @@ if args.contains("--help") || args.contains("-h") {
 }
 
 if args.contains("--version") || args.contains("-v") {
-    print("diskpulse version 1.0.0")
+    print("diskpulse version 1.1.0")
     exit(0)
 }
 
 let isJson = args.contains("--json")
 let targetDiskIndex = args.firstIndex(of: "--disk").flatMap { $0 + 1 < args.count ? args[$0 + 1] : nil }
 
-let disksToScan: [String]
+var reports: [DiskReport] = []
 if let target = targetDiskIndex {
-    disksToScan = [target]
+    if let report = DiskPulseScanner.inspectDisk(target) {
+        reports.append(report)
+    }
 } else if args.contains("--all") {
-    disksToScan = DiskPulseScanner.getDiskIdentifiers()
+    reports = DiskPulseScanner.scanAllDisks()
 } else {
     let all = DiskPulseScanner.getDiskIdentifiers()
     let physicalDisks = all.filter { $0.hasPrefix("disk0") }
-    disksToScan = physicalDisks.isEmpty ? ["disk0"] : physicalDisks
-}
-
-var reports: [DiskReport] = []
-for disk in disksToScan {
-    if let report = DiskPulseScanner.inspectDisk(disk) {
-        reports.append(report)
+    for disk in (physicalDisks.isEmpty ? ["disk0"] : physicalDisks) {
+        if let report = DiskPulseScanner.inspectDisk(disk) {
+            reports.append(report)
+        }
     }
 }
 

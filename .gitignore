@@ -6,6 +6,10 @@ xcuserdata/
 DerivedData/
 .swiftpm/xcode
 
+# Build output
+/dist
+/Resources/AppIcon.iconset
+
 # Binaries
 diskpulse
 mac-ssd-health
